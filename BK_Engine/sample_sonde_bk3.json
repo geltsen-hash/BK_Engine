@@ -1,0 +1,27 @@
+{
+  "probe_name": "BK3_Standard_120M",
+  "tool_radius_m": 0.045,
+  "electrodes": [
+    { "name": "A0", "z_start": 0.00, "length": 0.20 },
+    { "name": "M1", "z_start": 0.35, "length": 0.05 },
+    { "name": "N1", "z_start": 0.60, "length": 0.05 },
+    { "name": "M2", "z_start": 0.90, "length": 0.05 },
+    { "name": "N2", "z_start": 1.20, "length": 0.05 },
+    { "name": "A1", "z_start": 1.50, "length": 0.50 },
+    { "name": "B0", "z_start": 3.00, "length": 1.00 }
+  ],
+  "modes": [
+    {
+      "mode_name": "Mode_AL_B1",
+      "states": [
+        { "electrode": "A0", "state": "CONNECTED", "voltage": 1.0 },
+        { "electrode": "M1", "state": "FLOATING" },
+        { "electrode": "N1", "state": "FLOATING" },
+        { "electrode": "M2", "state": "FLOATING" },
+        { "electrode": "N2", "state": "FLOATING" },
+        { "electrode": "A1", "state": "CONNECTED", "voltage": 1.0 },
+        { "electrode": "B0", "state": "CONNECTED", "voltage": 0.0 }
+      ]
+    }
+  ]
+}

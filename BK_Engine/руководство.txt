@@ -1,0 +1,157 @@
+Руководство по интеграции BK_Engine.dll для разработчика MATLAB
+Библиотека BK_Engine.dll (64-bit Windows) предназначена для высокопроизводительного решения осесимметричной 2D прямой задачи бокового каротажа (БК) в трехслойной цилиндрической среде Дахнова (скважина $\rightarrow$ зона проникновения $\rightarrow$ пласт) с произвольной геометрией зонда и режимами питания.
+
+1. Поставляемые файлы
+Для работы в MATLAB требуются следующие файлы:
+
+BK_Engine.dll — скомпилированная динамическая библиотека (x64 Release).
+bk_engine_api.h — C-заголовочный файл с прототипами функций и структурами.
+sonde_config.json — JSON-файл конфигурации прибора (размеры, электроды, режимы).
+2. Архитектура и принцип работы
+Расчет палеток разделен на 2 уровня для максимального быстродействия:
+
+BK_SetMediumGeometry(handle, r_bh, r_pz) — вызывается только при смене радиусов скважины $r_{bh}$ и зоны проникновения $r_{pz}$. Производит перестроение конечно-разностной сетки.
+BK_SolveResistivity(handle, rho_bh, rho_pz, rho_t, ...) или BK_SolveResistivityBatch — вызывается во внутреннем цикле по УЭС. Расчет занимает $\approx 25\text{–}30\text{ мс}$ на точку.
+3. Формат входного JSON-файла зонда
+
+
+json
+{
+  "probe_name": "BK3_Standard_120M",
+  "tool_radius_m": 0.045,
+  "electrodes": [
+    { "name": "A0", "z_start": 0.00, "length": 0.20 },
+    { "name": "M1", "z_start": 0.35, "length": 0.05 },
+    { "name": "N1", "z_start": 0.60, "length": 0.05 },
+    { "name": "M2", "z_start": 0.90, "length": 0.05 },
+    { "name": "N2", "z_start": 1.20, "length": 0.05 },
+    { "name": "A1", "z_start": 1.50, "length": 0.50 },
+    { "name": "B0", "z_start": 3.00, "length": 1.00 }
+  ],
+  "modes": [
+    {
+      "mode_name": "Mode_AL_B1",
+      "states": [
+        { "electrode": "A0", "state": "CONNECTED", "voltage": 1.0 },
+        { "electrode": "M1", "state": "FLOATING" },
+        { "electrode": "N1", "state": "FLOATING" },
+        { "electrode": "M2", "state": "FLOATING" },
+        { "electrode": "N2", "state": "FLOATING" },
+        { "electrode": "A1", "state": "CONNECTED", "voltage": 1.0 },
+        { "electrode": "B0", "state": "CONNECTED", "voltage": 0.0 }
+      ]
+    }
+  ]
+}
+4. Готовый пример работы в MATLAB (loadlibrary / calllib)
+Создайте скрипт run_bk_simulation.m:
+
+
+
+matlab
+%% 1. Загрузка библиотеки в MATLAB
+if ~libisloaded('BK_Engine')
+    loadlibrary('BK_Engine.dll', 'bk_engine_api.h');
+end
+ 
+%% 2. Инициализация солвера
+config_file = 'sample_sonde_bk3.json';
+pHandle = libpointer('voidPtr');
+ 
+% Передаем NULL (пустой указатель) для использования параметров сетки по умолчанию
+pNullGrid = libpointer('BK_GridParamsPtr');
+status = calllib('BK_Engine', 'BK_CreateSolverFromConfigFile', config_file, pNullGrid, pHandle);
+ 
+if ~strcmp(status, 'BK_STATUS_OK')
+    err_buf = blanks(512);
+    calllib('BK_Engine', 'BK_GetLastErrorMessage', libpointer('voidPtr'), err_buf, 512);
+    error(['Ошибка создания солвера: ', strtrim(err_buf)]);
+end
+hSolver = pHandle.Value;
+ 
+%% 3. Получение информации о приборе и сетке
+num_els = int32(0);
+num_modes = int32(0);
+pNumEls = libpointer('int32Ptr', num_els);
+pNumModes = libpointer('int32Ptr', num_modes);
+calllib('BK_Engine', 'BK_GetProbeInfo', hSolver, pNumEls, pNumModes);
+N_els = double(pNumEls.Value);
+N_modes = double(pNumModes.Value);
+ 
+fprintf('Зонд загружен: %d электродов, %d режимов питания.\n', N_els, N_modes);
+ 
+%% 4. Расчет одиночной точки (Single Point Solve)
+r_bh   = 0.108;  % Радиус скважины, м
+r_pz   = 0.400;  % Радиус зоны проникновения, м
+rho_bh = 1.0;    % УЭС промывочной жидкости, Ом*м
+rho_pz = 10.0;   % УЭС зоны проникновения, Ом*м
+rho_t  = 50.0;   % УЭС неизмененного пласта, Ом*м
+ 
+% Шаг А: Установка геометрии (перестроение сетки)
+calllib('BK_Engine', 'BK_SetMediumGeometry', hSolver, r_bh, r_pz);
+ 
+% Шаг Б: Расчет электрических параметров
+total_vals = N_els * N_modes;
+out_buffer = zeros(1, total_vals);
+pOut = libpointer('doublePtr', out_buffer);
+ 
+tic;
+calllib('BK_Engine', 'BK_SolveResistivity', hSolver, rho_bh, rho_pz, rho_t, pOut, int32(total_vals));
+calc_time = toc;
+ 
+results = reshape(pOut.Value, [N_els, N_modes]);
+fprintf('Расчет выполнен за %.2f мс.\n', calc_time * 1000);
+ 
+% Вывод значений: для CONNECTED возвращается Ток [А], для FLOATING - Потенциал [В]
+for e = 1:N_els
+    fprintf('  Электрод #%d -> Значение: %.6f\n', e, results(e, 1));
+end
+ 
+%% 5. Пакетный расчет палетки (Fast Batch Solve)
+% Для фиксированной геометрии (r_bh, r_pz) рассчитываем сетку по УЭС
+rho_bh_vec = ones(1, 100) * 1.0;
+rho_pz_vec = logspace(-1, 2, 100);
+rho_t_vec  = logspace(0, 3, 100);
+N_pts = int32(100);
+ 
+batch_out = zeros(1, N_pts * total_vals);
+pBatchOut = libpointer('doublePtr', batch_out);
+ 
+tic;
+calllib('BK_Engine', 'BK_SolveResistivityBatch', hSolver, ...
+    rho_bh_vec, rho_pz_vec, rho_t_vec, N_pts, pBatchOut);
+batch_time = toc;
+ 
+fprintf('Пакетный расчет %d точек выполнен за %.2f с (%.2f мс/точка).\n', ...
+    N_pts, batch_time, (batch_time / double(N_pts)) * 1000);
+ 
+%% 6. Получение двумерных карт распределения потенциала V(r,z)
+nr = int32(0); nz = int32(0);
+pNr = libpointer('int32Ptr', nr); pNz = libpointer('int32Ptr', nz);
+calllib('BK_Engine', 'BK_GetGridDimensions', hSolver, pNr, pNz);
+Nr = double(pNr.Value); Nz = double(pNz.Value);
+ 
+r_nodes = zeros(1, Nr); z_nodes = zeros(1, Nz);
+calllib('BK_Engine', 'BK_GetGridNodes', hSolver, r_nodes, int32(Nr), z_nodes, int32(Nz));
+ 
+v_map = zeros(1, Nr * Nz);
+calllib('BK_Engine', 'BK_GetFieldMaps', hSolver, int32(0), v_map, libpointer('doublePtr'));
+ 
+% Визуализация 2D поля в MATLAB
+V_2D = reshape(v_map, [Nr, Nz])';
+figure('Name', '2D Поле Потенциала БК');
+imagesc(r_nodes, z_nodes, V_2D);
+colorbar; colormap jet;
+xlabel('Радиус r, м'); ylabel('Глубина z, м');
+title('Распределение потенциала V(r,z) в среде Дахнова');
+ 
+%% 7. Освобождение ресурсов
+calllib('BK_Engine', 'BK_DestroySolver', hSolver);
+% unloadlibrary('BK_Engine'); % при завершении сессии MATLAB
+5. Выходные значения электродов
+Каждый элемент массива результатов соответствует электроду прибора в порядке их описания в JSON:
+
+Для CONNECTED (токовые/заземляющие электроды $A, B$): возвращается полный ток электрода $I$ в Амперах [А] (положительный для источника, отрицательный для стока).
+Для FLOATING (измерительные электроды $M, N$): возвращается средний потенциал $V$ в Вольтах [В].
+Разность потенциалов рассчитывается в MATLAB: $\Delta U_{MN} = V_M - V_N$.
+Кажущееся сопротивление: $\rho_k = K \cdot \frac{\Delta U_{MN}}{I_A}$.

@@ -1,0 +1,614 @@
+{
+  "probe_name": "5BK_120mm_L5.00m",
+  "tool_radius_m": 0.06,
+  "tool_diameter_mm": 120,
+  "total_array_length_m": 5.0,
+  "electrodes": [
+    {
+      "name": "A0",
+      "z_start": 3.475,
+      "length": 0.05
+    },
+    {
+      "name": "M_bot",
+      "z_start": 3.29,
+      "length": 0.04
+    },
+    {
+      "name": "M_top",
+      "z_start": 3.67,
+      "length": 0.04
+    },
+    {
+      "name": "N_bot",
+      "z_start": 3.1,
+      "length": 0.04
+    },
+    {
+      "name": "N_top",
+      "z_start": 3.86,
+      "length": 0.04
+    },
+    {
+      "name": "A1_bot",
+      "z_start": 2.9337,
+      "length": 0.05
+    },
+    {
+      "name": "A1_top",
+      "z_start": 4.0163,
+      "length": 0.05
+    },
+    {
+      "name": "A2_bot",
+      "z_start": 2.75,
+      "length": 0.05
+    },
+    {
+      "name": "A2_top",
+      "z_start": 4.2,
+      "length": 0.05
+    },
+    {
+      "name": "A3_bot",
+      "z_start": 2.5164,
+      "length": 0.065
+    },
+    {
+      "name": "A3_top",
+      "z_start": 4.4186,
+      "length": 0.065
+    },
+    {
+      "name": "A4_bot",
+      "z_start": 2.2262,
+      "length": 0.08
+    },
+    {
+      "name": "A4_top",
+      "z_start": 4.6938,
+      "length": 0.08
+    },
+    {
+      "name": "A5_bot",
+      "z_start": 1.8629,
+      "length": 0.1
+    },
+    {
+      "name": "A5_top",
+      "z_start": 5.0371,
+      "length": 0.1
+    },
+    {
+      "name": "A6_bot",
+      "z_start": 1.3357,
+      "length": 0.25
+    },
+    {
+      "name": "A6_top",
+      "z_start": 5.4143,
+      "length": 0.25
+    },
+    {
+      "name": "Ny_bot",
+      "z_start": 1.0,
+      "length": 0.13
+    },
+    {
+      "name": "Ny_top",
+      "z_start": 5.87,
+      "length": 0.13
+    }
+  ],
+  "modes": [
+    {
+      "mode_name": "Mode_A0_A2",
+      "states": [
+        {
+          "electrode": "A0",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "M_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A2_bot",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A2_top",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A3_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A3_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A4_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A4_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A5_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A5_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_top",
+          "state": "FLOATING"
+        }
+      ]
+    },
+    {
+      "mode_name": "Mode_A1_A2",
+      "states": [
+        {
+          "electrode": "A0",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_bot",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A1_top",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A2_bot",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A2_top",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A3_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A3_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A4_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A4_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A5_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A5_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_top",
+          "state": "FLOATING"
+        }
+      ]
+    },
+    {
+      "mode_name": "Mode_A2_A3",
+      "states": [
+        {
+          "electrode": "A0",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A2_bot",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A2_top",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A3_bot",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A3_top",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A4_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A4_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A5_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A5_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_top",
+          "state": "FLOATING"
+        }
+      ]
+    },
+    {
+      "mode_name": "Mode_A3_A4",
+      "states": [
+        {
+          "electrode": "A0",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A2_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A2_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A3_bot",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A3_top",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A4_bot",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A4_top",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A5_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A5_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_top",
+          "state": "FLOATING"
+        }
+      ]
+    },
+    {
+      "mode_name": "Mode_A4_A5",
+      "states": [
+        {
+          "electrode": "A0",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A2_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A2_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A3_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A3_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A4_bot",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A4_top",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A5_bot",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A5_top",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A6_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A6_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_top",
+          "state": "FLOATING"
+        }
+      ]
+    },
+    {
+      "mode_name": "Mode_A5_A6",
+      "states": [
+        {
+          "electrode": "A0",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "M_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "N_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A1_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A2_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A2_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A3_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A3_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A4_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A4_top",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "A5_bot",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A5_top",
+          "state": "CONNECTED",
+          "voltage": 1.0
+        },
+        {
+          "electrode": "A6_bot",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "A6_top",
+          "state": "CONNECTED",
+          "voltage": 0.0
+        },
+        {
+          "electrode": "Ny_bot",
+          "state": "FLOATING"
+        },
+        {
+          "electrode": "Ny_top",
+          "state": "FLOATING"
+        }
+      ]
+    }
+  ]
+}
